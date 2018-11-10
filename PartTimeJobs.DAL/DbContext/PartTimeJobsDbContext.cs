@@ -1,9 +1,7 @@
 namespace PartTimeJobs.DAL.DbContext
 {
     using PartTimeJobs.DAL.Models;
-    using System;
     using System.Data.Entity;
-    using System.Linq;
 
     public class PartTimeJobsDbContext : DbContext
     {

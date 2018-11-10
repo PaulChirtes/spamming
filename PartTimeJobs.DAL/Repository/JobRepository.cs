@@ -1,10 +1,7 @@
 ﻿using PartTimeJobs.DAL.DbContext;
 using PartTimeJobs.DAL.Models;
-using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PartTimeJobs.DAL.Repository
 {
@@ -12,6 +9,18 @@ namespace PartTimeJobs.DAL.Repository
     {
         public JobRepository(PartTimeJobsDbContext context) : base(context)
         {
+        }
+
+        public override IQueryable<Job> GetAll()
+        {
+            return base.GetAll()
+                .Include(job => job.Asignee)
+                .Include(job => job.Owner);
+        }
+
+        public override Job GetById(int id)
+        {
+            return GetAll().FirstOrDefault(job => job.Id.Equals(id));
         }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using PartTimeJobs.DAL.DbContext;
 using PartTimeJobs.DAL.Models;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PartTimeJobs.DAL.Repository
 {
@@ -14,6 +11,7 @@ namespace PartTimeJobs.DAL.Repository
     {
         DbSet<T> _dbSet;
         PartTimeJobsDbContext _context;
+        Type[] _allowedTypes = new Type[] { typeof(string), typeof(int), typeof(DateTime), typeof(long), typeof(double), typeof(float) };
         public BaseRepository(PartTimeJobsDbContext context)
         {
             _dbSet = context.Set<T>();
@@ -35,14 +33,20 @@ namespace PartTimeJobs.DAL.Repository
             return _dbSet;
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             return _dbSet.FirstOrDefault(entity => entity.Id.Equals(id));
         }
 
         public void Update(T entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            T oldEntity = GetById(entity.Id);
+            
+            PropertyInfo[] properties = typeof(T).GetRuntimeProperties()
+                .Where(info => info.PropertyType != null && _allowedTypes.Contains(info.PropertyType))
+                .ToArray();
+            SetEntityProperties(properties, oldEntity, entity);
+            _context.Entry(oldEntity).State = EntityState.Modified;
         }
 
         protected void SetEntityProperties(PropertyInfo[] properties, T oldEntity, T entity)

@@ -1,11 +1,8 @@
 ﻿using PartTimeJobs.DAL.Models;
 using PartTimeJobs.DAL.Repository;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PartTimeJobs.DAL.DbContext
 {
@@ -21,6 +18,12 @@ namespace PartTimeJobs.DAL.DbContext
         public static void Commit()
         {
             _dbContext.SaveChanges();
+        }
+
+        public static void Revert()
+        {
+            _dbContext.Dispose();
+            _dbContext = new PartTimeJobsDbContext();
         }
 
         public static IRepository<T> GetRepository<T>() where T : BaseEntity
