@@ -1,6 +1,6 @@
 ﻿using PartTimeJobs.DAL.Models;
 
-namespace PArtTimeJobs.BLL.Validator
+namespace PartTimeJobs.BLL.Validator
 {
     public class UserValidator : IValidator<User>
     {

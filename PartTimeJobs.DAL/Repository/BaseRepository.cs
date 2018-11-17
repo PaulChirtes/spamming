@@ -11,7 +11,7 @@ namespace PartTimeJobs.DAL.Repository
     {
         DbSet<T> _dbSet;
         PartTimeJobsDbContext _context;
-        Type[] _allowedTypes = new Type[] { typeof(string), typeof(int), typeof(DateTime), typeof(long), typeof(double), typeof(float) };
+        Type[] _allowedTypes = new Type[] { typeof(string), typeof(int), typeof(DateTime), typeof(long), typeof(double), typeof(float), typeof(UserType) };
         public BaseRepository(PartTimeJobsDbContext context)
         {
             _dbSet = context.Set<T>();

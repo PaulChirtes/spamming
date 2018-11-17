@@ -1,12 +1,12 @@
-﻿using PartTimeJobs.DAL.DbContext;
+﻿using PartTimeJobs.BLL.Validator;
+using PartTimeJobs.DAL.DbContext;
 using PartTimeJobs.DAL.Models;
 using PartTimeJobs.DAL.Repository;
-using PArtTimeJobs.BLL.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PArtTimeJobs.BLL.Services
+namespace PartTimeJobs.BLL.Services
 {
     public abstract class BaseService<T> where T:BaseEntity
     {
@@ -17,6 +17,11 @@ namespace PArtTimeJobs.BLL.Services
         {
             _repository = UnitOfWork.GetRepository<T>();
             _validator = validator;
+        }
+
+        protected BaseService()
+        {
+            _repository = UnitOfWork.GetRepository<T>();
         }
 
         protected void PerformOperation(Action action)
@@ -43,7 +48,10 @@ namespace PArtTimeJobs.BLL.Services
         {
             PerformOperation(() =>
             {
-                _validator.Validate(entity);
+                if (_validator != null)
+                {
+                    _validator.Validate(entity);
+                }
                 _repository.Add(entity);
             });
         }
@@ -57,7 +65,10 @@ namespace PArtTimeJobs.BLL.Services
         {
             PerformOperation(() =>
             {
-                _validator.Validate(entity);
+                if (_validator != null)
+                {
+                    _validator.Validate(entity);
+                }
                 _repository.Update(entity);
             });
         }

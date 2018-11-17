@@ -57,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PArtTimeJobs.BLL\PartTimeJobs.BLL.csproj">
+      <Project>{A20F77E7-550C-4A7E-AF40-32626A6ABA63}</Project>
+      <Name>PartTimeJobs.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PartTimeJobs.DAL\PartTimeJobs.DAL.csproj">
       <Project>{E61FD74C-9398-4C92-8C36-7FC50166D865}</Project>
       <Name>PartTimeJobs.DAL</Name>

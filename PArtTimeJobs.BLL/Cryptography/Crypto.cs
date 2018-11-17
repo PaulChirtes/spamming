@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace PArtTimeJobs.BLL.Cryptography
+namespace PartTimeJobs.BLL.Cryptography
 {
     public static class Crypto
     {

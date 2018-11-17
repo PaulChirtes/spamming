@@ -1,7 +1,7 @@
-﻿using PartTimeJobs.DAL.DbContext;
+﻿using PartTimeJobs.BLL.Services;
+using PartTimeJobs.BLL.Validator;
+using PartTimeJobs.DAL.DbContext;
 using PartTimeJobs.DAL.Models;
-using System;
-using System.Linq;
 
 namespace Try
 {
@@ -10,18 +10,8 @@ namespace Try
         static void Main(string[] args)
         {
             UnitOfWork.Create();
-            var repo = UnitOfWork.GetRepository<User>();
-            var provider = new User { Email = "a@a.com", Password = "plm", UserName = "fds", UserType = UserType.Provider };
-            repo.Add(provider);
-            var client = new User { Email = "a@a.com", Password = "plm", UserName = "fds", UserType = UserType.Client };
-            repo.Add(client);
-            repo.GetAll().Where(user => user.UserType == UserType.Client).ToList().ForEach(user => Console.WriteLine(user.UserName));
-
-            var jobRepo = UnitOfWork.GetRepository<Job>();
-            jobRepo.Add(new Job { Asignee = client, Owner = provider, Title = "titlu", Description = "tocanita" });
-            UnitOfWork.Commit();
-            var jobs = jobRepo.GetAll().ToList();
-
+            var service = new UserService(new UserValidator());
+            service.Add(new User { UserName = "admin", Password = "admin", UserType = UserType.Provider });
         }
     }
 }

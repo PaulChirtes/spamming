@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PArtTimeJobs.BLL.Validator
+namespace PartTimeJobs.BLL.Validator
 {
     class ValidatorException : Exception
     {
