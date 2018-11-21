@@ -28,7 +28,8 @@ namespace PartTimeJobs.Controllers
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Incorrect request");
                 }
-
+                userDto.Password = JwtManager.DecryptBase64(userDto.Password);
+                userDto.UserName = JwtManager.DecryptBase64(userDto.UserName);
                 DAL.Models.User user = _userService.PerformLogin(_userFactory.GetUserFromDto(userDto));
                 if (user != null)
                 {

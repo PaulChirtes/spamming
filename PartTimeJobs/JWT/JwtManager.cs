@@ -67,5 +67,11 @@ namespace PartTimeJobs.JWT
                 return false;
             }
         }
-    }
+
+        public static string DecryptBase64(string value)
+        {
+            byte[] data = Convert.FromBase64String(value);
+            return Encoding.UTF8.GetString(data);
+        }
+    }   
 }
