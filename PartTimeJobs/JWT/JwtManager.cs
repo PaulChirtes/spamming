@@ -31,7 +31,7 @@ namespace PartTimeJobs.JWT
 
             var payload = new JwtPayload(new Claim[]
             {
-                new Claim(Settings.UserNameClaimKey, user.UserName),
+                new Claim(Settings.EmailClaimKey, user.UserName),
                 new Claim(Settings.UserTypeClaimKey, GetRole(user.UserType))
             });
 
@@ -54,13 +54,12 @@ namespace PartTimeJobs.JWT
                 var handler = new JwtSecurityTokenHandler();
                 var token = handler.ReadJwtToken(tokenString);
                 var payload = token.Payload;
-                object user, type;
-                if (!payload.TryGetValue(Settings.UserNameClaimKey, out user) || !payload.TryGetValue(Settings.UserTypeClaimKey, out type))
+                object email, type;
+                if (!payload.TryGetValue(Settings.EmailClaimKey, out email) || !payload.TryGetValue(Settings.UserTypeClaimKey, out type))
                 {
                     return false;
                 }
-                string userName = user.ToString();
-                return _userService.UserExists(userName);
+                return _userService.UserExists(email.ToString());
             }
             catch
             {

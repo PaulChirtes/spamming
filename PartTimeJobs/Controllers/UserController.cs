@@ -14,7 +14,6 @@ namespace PartTimeJobs.Controllers
 {
     public class UserController : BaseController
     {
-        private UserFactory _userFactory = new UserFactory();
         private UserService _userService = new UserService(new UserValidator());
 
         [HttpPost]
@@ -29,8 +28,10 @@ namespace PartTimeJobs.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Incorrect request");
                 }
                 userDto.Password = JwtManager.DecryptBase64(userDto.Password);
-                userDto.UserName = JwtManager.DecryptBase64(userDto.UserName);
-                DAL.Models.User user = _userService.PerformLogin(_userFactory.GetUserFromDto(userDto));
+                userDto.Email = JwtManager.DecryptBase64(userDto.Email);
+
+                var userFactory = new UserFactory();
+                var user = _userService.PerformLogin(userFactory.GetUserFromDto(userDto));
                 if (user != null)
                 {
                     var response =  Request.CreateResponse(HttpStatusCode.OK);
@@ -43,11 +44,36 @@ namespace PartTimeJobs.Controllers
             });
         }
 
-        [UserAuthorize]
-        [Route("test")]
-        public HttpResponseMessage Get()
+
+        //This is an example for authorize
+        //[UserAuthorize]
+        //[Route("test")]
+        //public HttpResponseMessage Get()
+        //{
+        //    return HandleRequestSafely(() => Request.CreateResponse(HttpStatusCode.OK,"mere"));
+        //}
+
+        [Route("register")]
+        [AllowAnonymous]
+        [HttpPost]
+        public HttpResponseMessage Register([FromBody] UserDetailDto userDetailDto)
         {
-            return HandleRequestSafely(() => Request.CreateResponse(HttpStatusCode.OK,"mere"));
+            return HandleRequestSafely(() =>
+            {
+                if (userDetailDto == null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, "User can't be null");
+                }
+
+                var userDetailModelFactory = new UserDetailModelFactory();
+                var user = userDetailModelFactory.GetUserFromDto(userDetailDto);
+                _userService.Add(user);
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            });
         }
+
+
+
     }
 }

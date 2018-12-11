@@ -224,7 +224,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JWT\JwtManager.cs" />
+    <Compile Include="Models\BaseDto.cs" />
+    <Compile Include="Models\ModelFactories\UserDetailModelFactory.cs" />
     <Compile Include="Models\ModelFactories\UserFactory.cs" />
+    <Compile Include="Models\UserDetailDto.cs" />
     <Compile Include="Models\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
