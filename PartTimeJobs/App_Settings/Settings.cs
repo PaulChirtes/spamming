@@ -24,7 +24,7 @@ namespace PartTimeJobs.App_Settings
             }
         }
 
-        public const string UserNameClaimKey = "UserName";
+        public const string EmailClaimKey = "Email";
         public const string UserTypeClaimKey = "UserType";
         public const string Provider = "Provider";
         public const string Client = "Client";

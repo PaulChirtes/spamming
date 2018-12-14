@@ -8,7 +8,7 @@ namespace PartTimeJobs.Models.ModelFactories
         {
             return new User
             {
-                UserName = userDto.UserName,
+                Email = userDto.Email,
                 Password = userDto.Password
             };
         }
