@@ -229,6 +229,7 @@
     <Compile Include="Models\ModelFactories\UserFactory.cs" />
     <Compile Include="Models\UserDetailDto.cs" />
     <Compile Include="Models\UserDto.cs" />
+    <Compile Include="Models\UserProfileDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
