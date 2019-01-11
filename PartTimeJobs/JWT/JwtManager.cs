@@ -72,5 +72,26 @@ namespace PartTimeJobs.JWT
             byte[] data = Convert.FromBase64String(value);
             return Encoding.UTF8.GetString(data);
         }
+
+        public static string GetEmailFromToken(string tokenString)
+        {
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                var token = handler.ReadJwtToken(tokenString);
+                var payload = token.Payload;
+                object email;
+                if (!payload.TryGetValue(Settings.EmailClaimKey, out email))
+                {
+                    return "";
+                }
+                return email.ToString();
+            }
+            catch
+            {
+                return "";
+            }
+
+        }
     }   
 }
