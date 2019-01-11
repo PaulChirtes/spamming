@@ -31,7 +31,7 @@ namespace PartTimeJobs.JWT
 
             var payload = new JwtPayload(new Claim[]
             {
-                new Claim(Settings.EmailClaimKey, user.UserName),
+                new Claim(Settings.EmailClaimKey, user.Email),
                 new Claim(Settings.UserTypeClaimKey, GetRole(user.UserType))
             });
 
