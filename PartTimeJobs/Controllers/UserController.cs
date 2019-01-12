@@ -9,6 +9,8 @@ using System.Net;
 using System.Web;
 using PartTimeJobs.App_Settings;
 using PartTimeJobs.Authorization;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PartTimeJobs.Controllers
 {
@@ -70,6 +72,22 @@ namespace PartTimeJobs.Controllers
                 _userService.Add(user);
 
                 return Request.CreateResponse(HttpStatusCode.OK);
+            });
+        }
+
+        [UserAuthorize]
+        [Route("profile")]
+        [HttpGet]
+        public HttpResponseMessage GetUserDetails()
+        {
+            return HandleRequestSafely(() =>
+            {
+                IEnumerable<string> tokenValues = new List<string>();
+                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
+                var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
+                var userDetailModelFactory = new UserDetailModelFactory();
+                return Request.CreateResponse(HttpStatusCode.OK, userDetailModelFactory.GetUserProfileDto(user));
+
             });
         }
 

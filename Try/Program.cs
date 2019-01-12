@@ -9,9 +9,10 @@ namespace Try
     {
         static void Main(string[] args)
         {
-            UnitOfWork.Create();
+            //UnitOfWork.Create();
             var service = new UserService(new UserValidator());
-            service.Add(new User { UserName = "admin", Password = "admin", UserType = UserType.Provider });
+            var a = service.GetUserByEmail("admin@admin.com");
+            //service.Add(new User { UserName = "admin", Password = "admin", UserType = UserType.Provider,Email="admin@admin.com" });
         }
     }
 }

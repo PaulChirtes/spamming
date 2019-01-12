@@ -35,5 +35,11 @@ namespace PartTimeJobs.BLL.Services
         {
             return _repository.GetAll().Any(user => user.Email.Equals(email));
         }
+
+        public User GetUserByEmail(string email)
+        {
+            return _repository.GetAll().FirstOrDefault(user => user.Email == email);
+        }
+        
     }
 }
