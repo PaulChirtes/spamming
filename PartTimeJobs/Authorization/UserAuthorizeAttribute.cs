@@ -1,4 +1,5 @@
-﻿using PartTimeJobs.JWT;
+﻿using PartTimeJobs.App_Settings;
+using PartTimeJobs.JWT;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -9,11 +10,11 @@ namespace PartTimeJobs.Authorization
     public class UserAuthorizeAttribute : AuthorizeAttribute
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
-        {
-            if (actionContext.Request.Headers.Contains("token"))
+        { 
+            if (actionContext.Request.Headers.Contains(Settings.TokenKey))
             {
                 IEnumerable<string> tokenValues = new List<string>();
-                actionContext.Request.Headers.TryGetValues("token", out tokenValues);
+                actionContext.Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
                 if (tokenValues.Count() == 1)
                 {
                     return JwtManager.ValidateToken(tokenValues.First());

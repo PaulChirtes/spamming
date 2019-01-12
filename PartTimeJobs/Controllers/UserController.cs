@@ -83,7 +83,7 @@ namespace PartTimeJobs.Controllers
             return HandleRequestSafely(() =>
             {
                 IEnumerable<string> tokenValues = new List<string>();
-                Request.Headers.TryGetValues("token", out tokenValues);
+                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
                 var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
                 var userDetailModelFactory = new UserDetailModelFactory();
                 return Request.CreateResponse(HttpStatusCode.OK, userDetailModelFactory.GetUserProfileDto(user));
