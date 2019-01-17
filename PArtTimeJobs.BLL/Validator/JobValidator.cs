@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PArtTimeJobs.BLL.Validator
 {
-    class JobValidator : IValidator<Job>
+    public class JobValidator : IValidator<Job>
     {
         public void Validate(Job job)
         {
