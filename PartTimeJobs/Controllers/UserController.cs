@@ -17,6 +17,7 @@ namespace PartTimeJobs.Controllers
     public class UserController : BaseController
     {
         private UserService _userService = new UserService(new UserValidator());
+        private SkillService _skillService = new SkillService();
 
         [HttpPost]
         [AllowAnonymous]
@@ -85,12 +86,41 @@ namespace PartTimeJobs.Controllers
                 IEnumerable<string> tokenValues = new List<string>();
                 Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
                 var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
-                var userDetailModelFactory = new UserDetailModelFactory();
-                return Request.CreateResponse(HttpStatusCode.OK, userDetailModelFactory.GetUserProfileDto(user));
 
+                var userDetailModelFactory = new UserDetailModelFactory();
+                var userProfile = userDetailModelFactory.GetUserProfileDto(user);
+                if (user.UserType == DAL.Models.UserType.Provider)
+                {
+                    userProfile.Skills = null;
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, userProfile);
             });
         }
 
+        [UserAuthorize]
+        [Route("profile")]
+        [HttpPost]
+        public HttpResponseMessage SaveProfile(UserProfileDto userProfileDto)
+        {
+            return HandleRequestSafely(() =>
+            {
+                if (userProfileDto == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Body can't be empty");
+                }
+                IEnumerable<string> tokenValues = new List<string>();
+                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
+                var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
+                user.UserName = userProfileDto.Username;
+                user.PhoneNumber = userProfileDto.PhoneNumber;
+                if (user.UserType == DAL.Models.UserType.Client)
+                {
+                    user.Skills = userProfileDto.Skills.Select(skill => _skillService.GetSkillByName(skill)).ToList();
+                }
+                _userService.Update(user);
+                return Request.CreateResponse(HttpStatusCode.OK);
+              });
+        }
 
 
     }

@@ -15,7 +15,8 @@ namespace PartTimeJobs.DAL.Repository
         {
             return base.GetAll()
                 .Include(user => user.JobsAssinged)
-                .Include(user => user.JobsCreated);
+                .Include(user => user.JobsCreated)
+                .Include(user => user.Skills);
         }
 
         public override User GetById(int id)

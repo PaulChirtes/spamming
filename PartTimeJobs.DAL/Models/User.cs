@@ -11,5 +11,6 @@ namespace PartTimeJobs.DAL.Models
         public UserType UserType { get; set; }
         public List<Job> JobsCreated { get; set; }
         public List<Job> JobsAssinged { get; set; }
+        public List<Skill> Skills { get; set; }
     }
 }
