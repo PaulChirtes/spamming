@@ -13,6 +13,8 @@ namespace Try
             var service = new UserService(new UserValidator());
             var a = service.GetUserByEmail("admin@admin.com");
             //service.Add(new User { UserName = "admin", Password = "admin", UserType = UserType.Provider,Email="admin@admin.com" });
+            service.Add(new User { UserName = "User1", Password = "pass1", UserType = UserType.Provider, Email = "test@test.test" });
+            service.Add(new User { UserName = "User2", Password = "pass2", UserType = UserType.Client, Email = "test@test2.test" });
         }
     }
 }

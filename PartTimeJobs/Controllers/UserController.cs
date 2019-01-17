@@ -90,8 +90,6 @@ namespace PartTimeJobs.Controllers
 
             });
         }
-
-
-
+        
     }
 }

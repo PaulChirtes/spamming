@@ -31,5 +31,16 @@ namespace PartTimeJobs.Models.ModelFactories
                 PhoneNumber = user.PhoneNumber
             };
         }
+
+        public UserDetailDto GetUserDetailDtoFromUser(User user)
+        {
+            return new UserDetailDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                UserType = user.UserType
+            };
+        }
     }
 }
