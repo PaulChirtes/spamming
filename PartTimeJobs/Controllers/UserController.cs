@@ -17,6 +17,7 @@ namespace PartTimeJobs.Controllers
     public class UserController : BaseController
     {
         private UserService _userService = new UserService(new UserValidator());
+        private SkillService _skillService = new SkillService();
 
         [HttpPost]
         [AllowAnonymous]
@@ -85,11 +86,16 @@ namespace PartTimeJobs.Controllers
                 IEnumerable<string> tokenValues = new List<string>();
                 Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
                 var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
-                var userDetailModelFactory = new UserDetailModelFactory();
-                return Request.CreateResponse(HttpStatusCode.OK, userDetailModelFactory.GetUserProfileDto(user));
 
+                var userDetailModelFactory = new UserDetailModelFactory();
+                var userProfile = userDetailModelFactory.GetUserProfileDto(user);
+                if (user.UserType == DAL.Models.UserType.Provider)
+                {
+                    userProfile.Skills = null;
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, userProfile);
             });
         }
-        
+
     }
 }

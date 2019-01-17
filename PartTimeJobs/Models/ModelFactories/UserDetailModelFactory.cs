@@ -28,7 +28,24 @@ namespace PartTimeJobs.Models.ModelFactories
                 Id = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber
+                PhoneNumber = user.PhoneNumber,
+                Type = user.UserType,
+                Skills = user.Skills == null ?
+                        new List<string>() :
+                        user.Skills.Select(skill => skill.SkillName).ToList()
+            };
+        }
+
+        public User GetUserFromUserProfile(UserProfileDto userProfileDto)
+        {
+            return new User
+            {
+                Id = userProfileDto.Id,
+                Email = userProfileDto.Email,
+                PhoneNumber = userProfileDto.PhoneNumber,
+                UserName = userProfileDto.Username,
+                Skills = userProfileDto.Skills == null ? null :
+                         userProfileDto.Skills.Select(skill => new Skill { SkillName = skill }).ToList()
             };
         }
 
