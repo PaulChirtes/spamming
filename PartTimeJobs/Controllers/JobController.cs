@@ -92,7 +92,16 @@ namespace PartTimeJobs.Controllers
         {
             return HandleRequestSafely(() =>
             {
+                IEnumerable<string> tokenValues = new List<string>();
+                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
+                var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
+                if (user.UserType != UserType.Provider)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Only providers can create jobs");
+                }
                 var job = new JobFactory().GetJobFromDto(jobDto);
+                job.Owner = user;
+                job.Asignee = null;
                 _jobService.Add(job);
                 return Request.CreateResponse(HttpStatusCode.OK);
             });
@@ -105,7 +114,15 @@ namespace PartTimeJobs.Controllers
         {
             return HandleRequestSafely(() =>
             {
+                IEnumerable<string> tokenValues = new List<string>();
+                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
+                var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
+                if (user.UserType != UserType.Provider)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Only providers can update jobs");
+                }
                 var job = new JobFactory().GetJobFromDto(jobDto);
+                job.Owner = user;
                 _jobService.Update(job);
                 return Request.CreateResponse(HttpStatusCode.OK);
             });

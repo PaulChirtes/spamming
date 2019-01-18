@@ -10,6 +10,11 @@ namespace PartTimeJobs.Models.ModelFactories
     {
         public User GetUserFromDto(UserDetailDto userDetailDto)
         {
+            if (userDetailDto == null)
+            {
+                return null;
+            }
+
             return new User
             {
                 Id = userDetailDto.Id,
@@ -53,7 +58,7 @@ namespace PartTimeJobs.Models.ModelFactories
         {
             if (user == null)
             {
-                return new UserDetailDto();
+                return null;
             }
 
             return new UserDetailDto
