@@ -51,6 +51,11 @@ namespace PartTimeJobs.Models.ModelFactories
 
         public UserDetailDto GetUserDetailDtoFromUser(User user)
         {
+            if (user == null)
+            {
+                return new UserDetailDto();
+            }
+
             return new UserDetailDto
             {
                 Id = user.Id,

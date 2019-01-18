@@ -24,6 +24,7 @@ namespace PartTimeJobs.Models.ModelFactories
         {
             return new JobDto
             {
+                Id = job.Id,
                 Title = job.Title,
                 Description = job.Description,
                 Assigne = new UserDetailModelFactory().GetUserDetailDtoFromUser(job.Asignee),

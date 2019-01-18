@@ -21,7 +21,6 @@ namespace PartTimeJobs.Controllers
         private UserService _userService = new UserService();
 
         [HttpGet]
-        [UserAuthorize]
         [Route("unassignedJobs")]
         public HttpResponseMessage GetNotAssignedJobs()
         {
@@ -55,7 +54,6 @@ namespace PartTimeJobs.Controllers
         }
 
         [HttpGet]
-        [UserAuthorize]
         [Route("getJob/{id}")]
         public HttpResponseMessage GetById(int id)
         {
@@ -89,7 +87,7 @@ namespace PartTimeJobs.Controllers
 
         [HttpPost]
         [UserAuthorize]
-        [Route("assignedJobs")]
+        [Route("job")]
         public HttpResponseMessage AddJob([FromBody] JobDto jobDto)
         {
             return HandleRequestSafely(() =>
@@ -133,6 +131,7 @@ namespace PartTimeJobs.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK);
             });
         }
+
 
 
 
