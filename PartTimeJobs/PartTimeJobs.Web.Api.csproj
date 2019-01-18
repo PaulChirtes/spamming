@@ -219,12 +219,15 @@
     <Compile Include="Authorization\UserAuthorizeAttribute.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JWT\JwtManager.cs" />
     <Compile Include="Models\BaseDto.cs" />
+    <Compile Include="Models\JobDto.cs" />
+    <Compile Include="Models\ModelFactories\JobFactory.cs" />
     <Compile Include="Models\ModelFactories\UserDetailModelFactory.cs" />
     <Compile Include="Models\ModelFactories\UserFactory.cs" />
     <Compile Include="Models\UserDetailDto.cs" />

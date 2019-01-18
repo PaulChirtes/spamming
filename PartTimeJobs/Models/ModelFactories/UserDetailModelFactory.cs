@@ -48,5 +48,16 @@ namespace PartTimeJobs.Models.ModelFactories
                          userProfileDto.Skills.Select(skill => new Skill { SkillName = skill }).ToList()
             };
         }
+
+        public UserDetailDto GetUserDetailDtoFromUser(User user)
+        {
+            return new UserDetailDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                UserType = user.UserType
+            };
+        }
     }
 }

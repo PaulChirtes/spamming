@@ -97,31 +97,5 @@ namespace PartTimeJobs.Controllers
             });
         }
 
-        [UserAuthorize]
-        [Route("profile")]
-        [HttpPost]
-        public HttpResponseMessage SaveProfile(UserProfileDto userProfileDto)
-        {
-            return HandleRequestSafely(() =>
-            {
-                if (userProfileDto == null)
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Body can't be empty");
-                }
-                IEnumerable<string> tokenValues = new List<string>();
-                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
-                var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
-                user.UserName = userProfileDto.Username;
-                user.PhoneNumber = userProfileDto.PhoneNumber;
-                if (user.UserType == DAL.Models.UserType.Client)
-                {
-                    user.Skills = userProfileDto.Skills.Select(skill => _skillService.GetSkillByName(skill)).ToList();
-                }
-                _userService.Update(user);
-                return Request.CreateResponse(HttpStatusCode.OK);
-              });
-        }
-
-
     }
 }
