@@ -60,6 +60,7 @@ namespace PartTimeJobs.Models.ModelFactories
             {
                 Id = user.Id,
                 Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
                 UserName = user.UserName,
                 UserType = user.UserType
             };
