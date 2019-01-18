@@ -21,7 +21,6 @@ namespace PartTimeJobs.Controllers
         private UserService _userService = new UserService();
 
         [HttpGet]
-        [UserAuthorize]
         [Route("unassignedJobs")]
         public HttpResponseMessage GetNotAssignedJobs()
         {
@@ -55,7 +54,6 @@ namespace PartTimeJobs.Controllers
         }
 
         [HttpGet]
-        [UserAuthorize]
         [Route("getJob/{id}")]
         public HttpResponseMessage GetById(int id)
         {
@@ -89,12 +87,21 @@ namespace PartTimeJobs.Controllers
 
         [HttpPost]
         [UserAuthorize]
-        [Route("assignedJobs")]
+        [Route("job")]
         public HttpResponseMessage AddJob([FromBody] JobDto jobDto)
         {
             return HandleRequestSafely(() =>
             {
+                IEnumerable<string> tokenValues = new List<string>();
+                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
+                var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
+                if (user.UserType != UserType.Provider)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Only providers can create jobs");
+                }
                 var job = new JobFactory().GetJobFromDto(jobDto);
+                job.Owner = user;
+                job.Asignee = null;
                 _jobService.Add(job);
                 return Request.CreateResponse(HttpStatusCode.OK);
             });
@@ -107,7 +114,15 @@ namespace PartTimeJobs.Controllers
         {
             return HandleRequestSafely(() =>
             {
+                IEnumerable<string> tokenValues = new List<string>();
+                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
+                var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
+                if (user.UserType != UserType.Provider)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Only providers can update jobs");
+                }
                 var job = new JobFactory().GetJobFromDto(jobDto);
+                job.Owner = user;
                 _jobService.Update(job);
                 return Request.CreateResponse(HttpStatusCode.OK);
             });
@@ -133,6 +148,7 @@ namespace PartTimeJobs.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK);
             });
         }
+
 
 
 
