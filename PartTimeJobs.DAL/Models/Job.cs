@@ -1,4 +1,6 @@
-﻿namespace PartTimeJobs.DAL.Models
+﻿using System.Collections.Generic;
+
+namespace PartTimeJobs.DAL.Models
 {
     public class Job : BaseEntity
     {
@@ -6,5 +8,6 @@
         public User Asignee { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public List<Skill> RequiredSkills { get; set; }
     }
 }
