@@ -13,5 +13,7 @@ namespace PartTimeJobs.Models
         public UserDetailDto Assigne { get; set; }
         public UserDetailDto Owner { get; set; }
         public JobType Type { get; set; }
+
+        public List<string> Skills { get; set; }
     }
 }
