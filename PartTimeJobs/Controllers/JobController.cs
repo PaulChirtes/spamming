@@ -82,7 +82,7 @@ namespace PartTimeJobs.Controllers
                 var job = _jobService.GetById(id);
                 if (job == null)
                 {
-                    return Request.CreateErrorResponse(HttpStatusCode.NoContent, "Something went wrong...");
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "There is no job with that id");
                 }
                 var jobFactory = new JobFactory();
                 return Request.CreateResponse(HttpStatusCode.OK, jobFactory.GetJobDtoFromJob(job));
