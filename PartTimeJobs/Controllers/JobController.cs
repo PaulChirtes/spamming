@@ -195,11 +195,6 @@ namespace PartTimeJobs.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.NoContent, "Something went wrong...");
                 }
 
-                if (!CheckSkills(job, user))
-                {
-                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You lack some required skills");
-                }
-
                 if (job.Owner == user || job.Asignee == user)
                 {
                     job.Asignee = null;
