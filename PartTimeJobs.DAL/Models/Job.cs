@@ -9,5 +9,6 @@ namespace PartTimeJobs.DAL.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public List<Skill> RequiredSkills { get; set; }
+        public JobType Type { get; set; }
     }
 }

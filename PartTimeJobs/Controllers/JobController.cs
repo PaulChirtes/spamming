@@ -7,6 +7,7 @@ using PartTimeJobs.Models;
 using PartTimeJobs.Models.ModelFactories;
 using PArtTimeJobs.BLL.Services;
 using PArtTimeJobs.BLL.Validator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -29,6 +30,23 @@ namespace PartTimeJobs.Controllers
                 var jobFactory = new JobFactory();
 
                 var jobs = _jobService.GetNotAssignedJobs();
+                if (jobs != null)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, jobs.Select(jobFactory.GetJobDtoFromJob));
+                }
+                return Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "Something went wrong...");
+            });
+        }
+
+        [HttpGet]
+        [Route("jobsByType/{type}")]
+        public HttpResponseMessage GetJobsByType(int type)
+        {
+            return HandleRequestSafely(() =>
+            {
+                var jobType = (JobType)Enum.ToObject(typeof(JobType), type);
+                var jobFactory = new JobFactory();
+                var jobs = _jobService.GetJobsByType(jobType);
                 if (jobs != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, jobs.Select(jobFactory.GetJobDtoFromJob));

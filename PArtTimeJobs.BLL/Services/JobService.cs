@@ -24,5 +24,10 @@ namespace PArtTimeJobs.BLL.Services
         {
             return _repository.GetAll().Where(j => (j.Asignee  == null)).ToList();
         }
+
+        public List<Job> GetJobsByType(JobType type)
+        {
+            return _repository.GetAll().Where(j => j.Asignee == null && j.Type == type).ToList();
+        }
     }
 }
