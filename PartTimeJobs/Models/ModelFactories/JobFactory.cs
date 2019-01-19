@@ -16,7 +16,8 @@ namespace PartTimeJobs.Models.ModelFactories
                 Description = jobDto.Description,
                 Asignee = new UserDetailModelFactory().GetUserFromDto(jobDto.Assigne),
                 Owner = new UserDetailModelFactory().GetUserFromDto(jobDto.Owner),
-                Id = jobDto.Id
+                Id = jobDto.Id,
+                Type = jobDto.Type
             };
         }
 
@@ -28,7 +29,8 @@ namespace PartTimeJobs.Models.ModelFactories
                 Title = job.Title,
                 Description = job.Description,
                 Assigne = new UserDetailModelFactory().GetUserDetailDtoFromUser(job.Asignee),
-                Owner = new UserDetailModelFactory().GetUserDetailDtoFromUser(job.Owner)
+                Owner = new UserDetailModelFactory().GetUserDetailDtoFromUser(job.Owner),
+                Type = job.Type
             };
         }
     }
