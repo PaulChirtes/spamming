@@ -31,6 +31,7 @@ namespace PartTimeJobs.DAL.DbContext
             modelBuilder.Entity<User>().HasMany<Job>(user => user.JobsCreated).WithRequired(job => job.Owner);
             modelBuilder.Entity<User>().HasMany<Skill>(user => user.Skills).WithMany(skill => skill.Users);
             modelBuilder.Entity<Job>().HasMany<Skill>(job => job.RequiredSkills).WithMany(skill => skill.Jobs);
+            modelBuilder.Entity<Job>().HasOptional(job => job.Review).WithRequired(review => review.Job);
         }
     }
 }

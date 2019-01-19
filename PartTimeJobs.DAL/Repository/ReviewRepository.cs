@@ -14,9 +14,9 @@ namespace PartTimeJobs.DAL.Repository
         public override IQueryable<Review> GetAll()
         {
             return base.GetAll()
-                .Include(review => review.Assignee)
-                .Include(review => review.Owner)
-                .Include(review => review.Job);
+                .Include(review => review.Job)
+                .Include(rev => rev.Job.Owner)
+                .Include(rev => rev.Job.Asignee);
         }
 
         public override Review GetById(int id)

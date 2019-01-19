@@ -220,6 +220,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JobController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -228,8 +229,10 @@
     <Compile Include="Models\BaseDto.cs" />
     <Compile Include="Models\JobDto.cs" />
     <Compile Include="Models\ModelFactories\JobFactory.cs" />
+    <Compile Include="Models\ModelFactories\ReviewFactory.cs" />
     <Compile Include="Models\ModelFactories\UserDetailModelFactory.cs" />
     <Compile Include="Models\ModelFactories\UserFactory.cs" />
+    <Compile Include="Models\ReviewDto.cs" />
     <Compile Include="Models\UserDetailDto.cs" />
     <Compile Include="Models\UserDto.cs" />
     <Compile Include="Models\UserProfileDto.cs" />
@@ -291,6 +294,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Review\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

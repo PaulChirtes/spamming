@@ -15,7 +15,9 @@ namespace PartTimeJobs.DAL.Repository
         {
             return base.GetAll()
                 .Include(job => job.Asignee)
-                .Include(job => job.Owner);
+                .Include(job => job.Owner)
+                .Include(job => job.Review)
+                .Include(job => job.RequiredSkills);
         }
 
         public override Job GetById(int id)

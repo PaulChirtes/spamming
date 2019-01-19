@@ -62,6 +62,13 @@ namespace PartTimeJobs.DAL.Repository
                         prop.SetValue(oldEntity, entityPropValue);
                     }
                 }
+                else
+                {
+                    if(entityPropValue != null)
+                    {
+                        prop.SetValue(oldEntity, entityPropValue);
+                    }
+                }
             }
         }
     }

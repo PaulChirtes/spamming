@@ -31,7 +31,9 @@ namespace PartTimeJobs.Models.ModelFactories
                 Assigne = new UserDetailModelFactory().GetUserDetailDtoFromUser(job.Asignee),
                 Owner = new UserDetailModelFactory().GetUserDetailDtoFromUser(job.Owner),
                 Type = job.Type,
-                Skills = job.RequiredSkills == null ? new List<string>() : job.RequiredSkills.Select(skill => skill.SkillName).ToList()
+                Skills = job.RequiredSkills == null ? new List<string>() : job.RequiredSkills.Select(skill => skill.SkillName).ToList(),
+                OwnerReview = job.Review == null ? null : (string.IsNullOrEmpty(job.Review.OwnerDescription)?null: job.Review.OwnerDescription),
+                AssigneeReview = job.Review == null ? null : (string.IsNullOrEmpty(job.Review.AssigneeDescription) ? null : job.Review.AssigneeDescription)
             };
         }
     }

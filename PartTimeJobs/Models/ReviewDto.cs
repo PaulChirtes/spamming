@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace PartTimeJobs.DAL.Models
+namespace PartTimeJobs.Models
 {
-    public class Review : BaseEntity
+    public class ReviewDto : BaseDto
     {
-        public Job Job { get; set; }
         public string OwnerDescription { get; set; }
         public string AssigneeDescription { get; set; }
+
+        public JobDto Job { get; set; }
+
     }
 }

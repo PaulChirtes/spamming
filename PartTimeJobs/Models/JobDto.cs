@@ -15,5 +15,8 @@ namespace PartTimeJobs.Models
         public JobType Type { get; set; }
 
         public List<string> Skills { get; set; }
+
+        public string OwnerReview { get; set; }
+        public string AssigneeReview { get; set; }
     }
 }

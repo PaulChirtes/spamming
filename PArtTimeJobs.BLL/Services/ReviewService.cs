@@ -18,14 +18,5 @@ namespace PArtTimeJobs.BLL.Services
         public ReviewService() : base()
         {
         }
-
-        public List<Review> GetAllReviewForUser(User user)
-        {
-            if (user.UserType == UserType.Client)
-            {
-                return _repository.GetAll().Where(r => r.Assignee == user).ToList();
-            }
-            return null;
-        }
     }
 }
