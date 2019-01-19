@@ -20,6 +20,8 @@ namespace PartTimeJobs.Controllers
     {
         private JobService _jobService = new JobService(new JobValidator());
         private UserService _userService = new UserService();
+        private SkillService _skillService = new SkillService();
+
 
         [HttpGet]
         [Route("unassignedJobs")]
@@ -120,6 +122,10 @@ namespace PartTimeJobs.Controllers
                 var job = new JobFactory().GetJobFromDto(jobDto);
                 job.Owner = user;
                 job.Asignee = null;
+                if (jobDto.Skills != null)
+                {
+                    job.RequiredSkills = jobDto.Skills.Select(skill => _skillService.GetSkillByName(skill)).ToList();
+                }
                 _jobService.Add(job);
                 return Request.CreateResponse(HttpStatusCode.OK);
             });
@@ -161,14 +167,31 @@ namespace PartTimeJobs.Controllers
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.NoContent, "Something went wrong...");
                 }
+
+                if (!CheckSkills(job, user))
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You lack some required skills");
+                }
+
                 job.Asignee = user;
                 _jobService.Update(job);
                 return Request.CreateResponse(HttpStatusCode.OK);
             });
         }
 
+        private bool CheckSkills(Job job, User user)
+        {
+            if(job.RequiredSkills==null || !job.RequiredSkills.Any())
+            {
+                return true;
+            }
 
+            if(user.Skills==null || !user.Skills.Any())
+            {
+                return job.RequiredSkills == null || !job.RequiredSkills.Any();
+            }
 
-
+            return job.RequiredSkills.All(skill => user.Skills.Any(s => s.SkillName.ToLower().Equals(skill.SkillName.ToLower())));
+        }
     }
 }
