@@ -179,6 +179,36 @@ namespace PartTimeJobs.Controllers
             });
         }
 
+        [HttpPut]
+        [UserAuthorize]
+        [Route("unapplyToJob/{id}")]
+        public HttpResponseMessage Unapply(int id)
+        {
+            return HandleRequestSafely(() =>
+            {
+                IEnumerable<string> tokenValues = new List<string>();
+                Request.Headers.TryGetValues(Settings.TokenKey, out tokenValues);
+                var user = _userService.GetUserByEmail(JwtManager.GetEmailFromToken(tokenValues.First()));
+                var job = _jobService.GetById(id);
+                if (job == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NoContent, "Something went wrong...");
+                }
+
+                if (!CheckSkills(job, user))
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You lack some required skills");
+                }
+
+                if (job.Owner == user || job.Asignee == user)
+                {
+                    job.Asignee = null;
+                    _jobService.Update(job);
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+            });
+        }
+
         private bool CheckSkills(Job job, User user)
         {
             if(job.RequiredSkills==null || !job.RequiredSkills.Any())
