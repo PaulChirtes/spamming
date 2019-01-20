@@ -147,6 +147,10 @@ namespace PartTimeJobs.Controllers
                 }
                 var job = new JobFactory().GetJobFromDto(jobDto);
                 job.Owner = user;
+                if (jobDto.Skills != null)
+                {
+                    job.RequiredSkills = jobDto.Skills.Select(skill => _skillService.GetSkillByName(skill)).ToList();
+                }
                 _jobService.Update(job);
                 return Request.CreateResponse(HttpStatusCode.OK);
             });

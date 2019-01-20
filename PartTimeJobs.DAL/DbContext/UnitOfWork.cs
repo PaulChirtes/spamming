@@ -12,6 +12,7 @@ namespace PartTimeJobs.DAL.DbContext
 
         public static void Create()
         {
+            _dbContext.Database.Delete();
             _dbContext.Database.CreateIfNotExists();
         }
 

@@ -1,6 +1,7 @@
 ﻿using PartTimeJobs.DAL.DbContext;
 using PartTimeJobs.DAL.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace PartTimeJobs.DAL.Repository
     {
         DbSet<T> _dbSet;
         PartTimeJobsDbContext _context;
-        Type[] _allowedTypes = new Type[] { typeof(string), typeof(int), typeof(DateTime), typeof(long), typeof(double), typeof(float), typeof(UserType) };
+        Type[] _allowedTypes = new Type[] { typeof(string), typeof(int), typeof(DateTime), typeof(long), typeof(double), typeof(float), typeof(UserType),typeof(JobType), typeof(List<Skill>) };
         public BaseRepository(PartTimeJobsDbContext context)
         {
             _dbSet = context.Set<T>();
